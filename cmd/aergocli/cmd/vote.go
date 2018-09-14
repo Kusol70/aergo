@@ -11,7 +11,6 @@ import (
 	"fmt"
 
 	peer "github.com/libp2p/go-libp2p-peer"
-	"github.com/mr-tron/base58/base58"
 
 	"github.com/aergoio/aergo/cmd/aergocli/util"
 	"github.com/aergoio/aergo/types"
@@ -51,12 +50,12 @@ func execVote(cmd *cobra.Command, args []string) {
 	}
 	defer client.Close()
 
-	account, err := base58.Decode(from)
+	account, err := types.DecodeAddress(from)
 	if err != nil {
 		fmt.Printf("Failed: %s\n", err.Error())
 		return
 	}
-	candidate, err := base58.Decode(to)
+	candidate, err := types.DecodeAddress(to)
 	if err != nil {
 		fmt.Printf("Failed: %s\n", err.Error())
 		return
@@ -140,6 +139,6 @@ func execVoteStat(cmd *cobra.Command, args []string) {
 		return
 	}
 	for i, r := range msg.GetVotes() {
-		fmt.Println(i+1, " : ", base58.Encode(r.Candidate), " : ", r.Amount)
+		fmt.Println(i+1, " : ", types.EncodeAddress(r.Candidate), " : ", r.Amount)
 	}
 }

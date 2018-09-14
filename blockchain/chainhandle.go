@@ -261,6 +261,7 @@ func executeTx(sdb *state.ChainStateDB, bs *types.BlockState, tx *types.Tx, dbTx
 		receiverID = types.ToAccountID(recipient)
 	} else {
 		createContract = true
+		// Determine new contract address
 		h := sha256.New()
 		h.Write(txBody.Account)
 		h.Write([]byte(strconv.FormatUint(txBody.Nonce, 10)))
